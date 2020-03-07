@@ -85,6 +85,8 @@ lazy val weather_provider = (project in file("weather-provider"))
     libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
       // your additional dependencies go here
     ),
+    libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.4.2",
+    libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
     dockerSettings()
   )
 

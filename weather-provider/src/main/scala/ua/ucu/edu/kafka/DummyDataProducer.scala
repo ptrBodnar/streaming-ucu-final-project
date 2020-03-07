@@ -4,6 +4,7 @@ import java.util.Properties
 
 import org.apache.kafka.clients.producer.{Callback, KafkaProducer, ProducerRecord, RecordMetadata}
 import org.slf4j.{Logger, LoggerFactory}
+import scalaj.http.HttpResponse
 
 // delete_me - for testing purposes
 object DummyDataProducer {
@@ -11,6 +12,8 @@ object DummyDataProducer {
   val logger: Logger = LoggerFactory.getLogger(getClass)
 
   def pushTestData(): Unit = {
+
+
     val BrokerList: String = System.getenv(Config.KafkaBrokers)
     val Topic = "weather_data"
     val props = new Properties()

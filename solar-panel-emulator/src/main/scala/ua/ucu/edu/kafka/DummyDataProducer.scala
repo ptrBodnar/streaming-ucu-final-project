@@ -11,7 +11,8 @@ object DummyDataProducer {
   val logger: Logger = LoggerFactory.getLogger(getClass)
 
   // This is just for testing purposes
-  def pushTestData(): Unit = {
+  def pushTestData(a: Any): Unit = {
+    println(a)
     val BrokerList: String = System.getenv(Config.KafkaBrokers)
     val Topic = "sensor-data"
 
