@@ -18,19 +18,16 @@ class getData {
 
   def parseAPI(): procurements = {
 
-    val request: HttpRequest = Http("https://public.api.ea2.openprocurement.net/api/2/auctions").param("offset", "2020-01-01")
+    val request: HttpRequest = Http("https://public.api.ea2.openprocurement.net/api/2/auctions")//.param("offset", "2020-01-01")
     val response = request.asString
     val result: String = response.body
 
     new procurements(ParseResponse(result))
-//    result match {
-//      // Matches if jsonStr is valid JSON and represents a Map of Strings to Any
-//      case Some(map: Map[String, String]) => map
-//      case None => Map()
-//      case other => Map()
-//    }
-
   }
+
+//  def getAuction(): procurements = {
+//
+//  }
 
 //  def handleWeatherRequest(request: String): (String,WeatherData) = {
 //
