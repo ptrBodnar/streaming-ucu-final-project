@@ -1,16 +1,10 @@
-import play.api.libs.json._
-import scalaj.http.{Http, HttpRequest, HttpResponse}
+import spray.json._
+//import play.api.libs.json._
+import scala.io.Source._
+import scala.io.BufferedSource
 
-val request: HttpRequest = Http("https://public.api.ea2.openprocurement.net/api/2/auctions/86faded9e2ac4a43845157f762a983b2")
-val response = request.asString
-val result: String = response.body
+val tweets_json: BufferedSource = scala.io.Source.fromResource("data.json")
+val tweets_json_str: String = try tweets_json.mkString finally tweets_json.close()
+//var tweets_array: JsValue = tweets_json_str.stripMargin.parseJson
 
-val values: JsValue = Json.parse(result)
-
-case class procurements(status: String, sm: String)
-
-
-val a = (values  \ "data" \ "procurementMethod").as[String]
-val proc = new procurements(a, "sm")
-
-proc.status
+tweets_json_str

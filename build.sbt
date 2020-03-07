@@ -75,6 +75,8 @@ lazy val solar_panel_emulator = (project in file("solar-panel-emulator"))
     libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
       // your additional dependencies go here
     ),
+    libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
+    libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.30",
     dockerSettings()
   )
 
@@ -87,6 +89,7 @@ lazy val weather_provider = (project in file("weather-provider"))
     ),
     libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.4.2",
     libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
+    libraryDependencies += "io.spray" %%  "spray-json" % "1.3.5",
     dockerSettings()
   )
 
