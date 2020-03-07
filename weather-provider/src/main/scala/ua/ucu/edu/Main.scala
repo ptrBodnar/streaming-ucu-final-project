@@ -15,7 +15,9 @@ object Main extends App {
   logger.info("======== Weather Provider App Init ========")
 
   val sm = new getData()
-  println(sm.parseAPI().id)
+//  println(sm.parseAPI())
+  val a = sm.parseProcurementList()
+  println(a(2))
 
 
 //  val values = sm.parseAPI()
