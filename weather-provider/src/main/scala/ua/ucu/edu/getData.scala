@@ -15,7 +15,28 @@ class getData {
 //    parsed.map(_("id"))
 //  }
 
-  case class procurements(id: String, dateModified: String)
+  case class procurements(status: String, sm: String)
+
+
+  def getDataPrepared(): Any = {
+    val procurementList = parseProcurementList()
+    val casesClasses = procurementList.map(d => parseSale(d))
+
+    casesClasses
+  }
+
+  def parseSale(procurement_id: String): Any = {
+    val request: HttpRequest = Http("https://public.api.ea2.openprocurement.net/api/2/auctions/" + procurement_id)
+    val response = request.asString
+    val result: String = response.body
+
+    val values: JsValue = Json.parse(result)
+    val parsed = (values  \ "data" \ "procurementMethod").as[String]
+    val proc = new procurements(parsed, "sm")
+
+    proc
+
+  }
 
   def parseProcurementList(): List[String] = {
 
@@ -35,7 +56,7 @@ class getData {
 //  def getAuction(): procurements = {
 //
 //  }
-  
+
 
 
 }

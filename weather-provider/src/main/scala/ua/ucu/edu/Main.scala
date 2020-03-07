@@ -16,17 +16,9 @@ object Main extends App {
 
   val sm = new getData()
 //  println(sm.parseAPI())
-  val a = sm.parseProcurementList()
-  println(a(2))
-
-
-//  val values = sm.parseAPI()
-//
-//
-//  val a = (values\ "data" \ 0  \ "id").get
-//
-//  println(a)
-
+  val a = sm.getDataPrepared()
+  println(a)
+  
 
 //  scheduler.schedule(5 seconds, 10 seconds,
   new Runnable {
