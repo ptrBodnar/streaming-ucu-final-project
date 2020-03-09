@@ -75,6 +75,19 @@ lazy val solar_panel_emulator = (project in file("solar-panel-emulator"))
     libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
       // your additional dependencies go here
     ),
+    libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
+    libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.30",
+    assemblyMergeStrategy in assembly := {
+	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
+	  case PathList("META-INF", xs @ _*) =>
+	    (xs map {_.toLowerCase}) match {
+	      case ("manifest.mf" :: Nil) | ("index.list" :: Nil) | ("dependencies" :: Nil) => MergeStrategy.discard
+	      case _ => MergeStrategy.last
+	    }
+	  case x =>
+	    val oldStrategy = (assemblyMergeStrategy in assembly).value
+	    oldStrategy(x)
+	},
     dockerSettings()
   )
 
@@ -85,6 +98,20 @@ lazy val weather_provider = (project in file("weather-provider"))
     libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
       // your additional dependencies go here
     ),
+    libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.4.2",
+    libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
+    libraryDependencies += "io.spray" %%  "spray-json" % "1.3.5",
+    assemblyMergeStrategy in assembly := {
+	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
+	  case PathList("META-INF", xs @ _*) =>
+	    (xs map {_.toLowerCase}) match {
+	      case ("manifest.mf" :: Nil) | ("index.list" :: Nil) | ("dependencies" :: Nil) => MergeStrategy.discard
+	      case _ => MergeStrategy.last
+	    }
+	  case x =>
+	    val oldStrategy = (assemblyMergeStrategy in assembly).value
+	    oldStrategy(x)
+	},
     dockerSettings()
   )
 
@@ -95,6 +122,19 @@ lazy val streaming_app = (project in file("streaming-app"))
     libraryDependencies ++= commonDependencies ++ streamsDependencies ++ Seq(
       // your additional dependencies go here
     ),
+    assemblyMergeStrategy in assembly := {
+	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
+	  case PathList("META-INF", xs @ _*) =>
+	    (xs map {_.toLowerCase}) match {
+	      case ("manifest.mf" :: Nil) | ("index.list" :: Nil) | ("dependencies" :: Nil) => MergeStrategy.discard
+	      case _ => MergeStrategy.last
+	    }
+	  case x =>
+	    val oldStrategy = (assemblyMergeStrategy in assembly).value
+	    oldStrategy(x)
+	},
     dockerSettings(),
     mainClass in assembly := Some("ua.ucu.edu.DummyStreamingApp")
   )
+
+

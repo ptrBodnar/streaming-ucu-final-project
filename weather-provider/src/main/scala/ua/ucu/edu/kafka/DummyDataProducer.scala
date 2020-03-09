@@ -11,8 +11,8 @@ object DummyDataProducer {
   val logger: Logger = LoggerFactory.getLogger(getClass)
 
   def pushTestData(): Unit = {
-    val BrokerList: String = System.getenv(Config.KafkaBrokers)
-    val Topic = "test_weather_data"
+    val BrokerList: String = "localhost:9092"
+    val Topic = "test_topic_out"
     val props = new Properties()
     props.put("bootstrap.servers", BrokerList)
     props.put("client.id", "weather-provider")
