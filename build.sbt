@@ -77,6 +77,7 @@ lazy val solar_panel_emulator = (project in file("solar-panel-emulator"))
     ),
     libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
     libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.30",
+<<<<<<< HEAD
     assemblyMergeStrategy in assembly := {
 	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
 	  case PathList("META-INF", xs @ _*) =>
@@ -88,6 +89,8 @@ lazy val solar_panel_emulator = (project in file("solar-panel-emulator"))
 	    val oldStrategy = (assemblyMergeStrategy in assembly).value
 	    oldStrategy(x)
 	},
+=======
+>>>>>>> cfcccf053578e10da418f12d5d70281fc23109a9
     dockerSettings()
   )
 
@@ -101,6 +104,7 @@ lazy val weather_provider = (project in file("weather-provider"))
     libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.4.2",
     libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
     libraryDependencies += "io.spray" %%  "spray-json" % "1.3.5",
+<<<<<<< HEAD
     assemblyMergeStrategy in assembly := {
 	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
 	  case PathList("META-INF", xs @ _*) =>
@@ -112,6 +116,8 @@ lazy val weather_provider = (project in file("weather-provider"))
 	    val oldStrategy = (assemblyMergeStrategy in assembly).value
 	    oldStrategy(x)
 	},
+=======
+>>>>>>> cfcccf053578e10da418f12d5d70281fc23109a9
     dockerSettings()
   )
 

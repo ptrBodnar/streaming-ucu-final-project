@@ -1,7 +1,7 @@
 package ua.ucu.edu
 
 //import ua.ucu.edu.DataHandler
-import ua.ucu.edu.kafka.{Config, DummyDataProducer}
+//import ua.ucu.edu.kafka.{Config, DummyDataProducer}
 import org.apache.kafka.clients.producer._
 import java.util.Properties
 import org.apache.kafka.clients.producer.{Callback, KafkaProducer, ProducerRecord, RecordMetadata}
