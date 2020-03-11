@@ -66,7 +66,9 @@ envFileName in ThisBuild := ".env"
 
 lazy val root = (project in file("."))
   .settings(name := "streaming-ucu-final-project")
-  .aggregate(solar_panel_emulator, weather_provider, streaming_app)
+  .aggregate(solar_panel_emulator, weather_provider, 
+    // streaming_app
+  )
 
 lazy val solar_panel_emulator = (project in file("solar-panel-emulator"))
   .enablePlugins(sbtdocker.DockerPlugin)
@@ -77,7 +79,6 @@ lazy val solar_panel_emulator = (project in file("solar-panel-emulator"))
     ),
     libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
     libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.30",
-<<<<<<< HEAD
     assemblyMergeStrategy in assembly := {
 	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
 	  case PathList("META-INF", xs @ _*) =>
@@ -89,8 +90,6 @@ lazy val solar_panel_emulator = (project in file("solar-panel-emulator"))
 	    val oldStrategy = (assemblyMergeStrategy in assembly).value
 	    oldStrategy(x)
 	},
-=======
->>>>>>> cfcccf053578e10da418f12d5d70281fc23109a9
     dockerSettings()
   )
 
@@ -104,7 +103,6 @@ lazy val weather_provider = (project in file("weather-provider"))
     libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.4.2",
     libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
     libraryDependencies += "io.spray" %%  "spray-json" % "1.3.5",
-<<<<<<< HEAD
     assemblyMergeStrategy in assembly := {
 	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
 	  case PathList("META-INF", xs @ _*) =>
@@ -116,31 +114,29 @@ lazy val weather_provider = (project in file("weather-provider"))
 	    val oldStrategy = (assemblyMergeStrategy in assembly).value
 	    oldStrategy(x)
 	},
-=======
->>>>>>> cfcccf053578e10da418f12d5d70281fc23109a9
     dockerSettings()
   )
 
-lazy val streaming_app = (project in file("streaming-app"))
-  .enablePlugins(sbtdocker.DockerPlugin)
-  .settings(
-    name := "streaming-app",
-    libraryDependencies ++= commonDependencies ++ streamsDependencies ++ Seq(
-      // your additional dependencies go here
-    ),
-    assemblyMergeStrategy in assembly := {
-	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
-	  case PathList("META-INF", xs @ _*) =>
-	    (xs map {_.toLowerCase}) match {
-	      case ("manifest.mf" :: Nil) | ("index.list" :: Nil) | ("dependencies" :: Nil) => MergeStrategy.discard
-	      case _ => MergeStrategy.last
-	    }
-	  case x =>
-	    val oldStrategy = (assemblyMergeStrategy in assembly).value
-	    oldStrategy(x)
-	},
-    dockerSettings(),
-    mainClass in assembly := Some("ua.ucu.edu.DummyStreamingApp")
-  )
+// lazy val streaming_app = (project in file("streaming-app"))
+//   .enablePlugins(sbtdocker.DockerPlugin)
+//   .settings(
+//     name := "streaming-app",
+//     libraryDependencies ++= commonDependencies ++ streamsDependencies ++ Seq(
+//       // your additional dependencies go here
+//     ),
+//     assemblyMergeStrategy in assembly := {
+// 	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
+// 	  case PathList("META-INF", xs @ _*) =>
+// 	    (xs map {_.toLowerCase}) match {
+// 	      case ("manifest.mf" :: Nil) | ("index.list" :: Nil) | ("dependencies" :: Nil) => MergeStrategy.discard
+// 	      case _ => MergeStrategy.last
+// 	    }
+// 	  case x =>
+// 	    val oldStrategy = (assemblyMergeStrategy in assembly).value
+// 	    oldStrategy(x)
+// 	},
+//     dockerSettings(),
+//     mainClass in assembly := Some("ua.ucu.edu.DummyStreamingApp")
+//   )
 
 
