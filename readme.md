@@ -44,7 +44,7 @@ docker run --net=host --rm confluentinc/cp-kafka:5.1.0 kafka-topics --create --t
 
  - Configure cli and login to ecr to be able to push images. You can simply use provided script:
    ```
-   ./staging_configure.sh <AWS_ACCESS_KEY_ID> <AWS_SECRET_ACCESS_KEY>
+   ./staging_configure.sh <AWS_ACCESS_KEY_ID> <AWS_SECRET_ACCESS_KEY> <AWS_ACCOUNT_ID>
    ```
    - On Windows, run `aws configure` first then proceed with `staging_configure.cmd`
 
