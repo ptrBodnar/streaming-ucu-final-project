@@ -13,6 +13,7 @@ export $(grep -v '^#' .env | xargs)
 
 AWS_ACCESS_KEY_ID=$1
 AWS_SECRET_ACCESS_KEY=$2
+AWS_ACCOUNT_ID=$3
 
 ecs-cli --version
 
@@ -28,5 +29,5 @@ ecs-cli configure profile default --profile-name ucu-class
 aws ecr get-login-password \
         --region us-east-1 | docker login \
         --username AWS \
-        --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
+        --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
 
