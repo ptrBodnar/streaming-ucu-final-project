@@ -66,8 +66,9 @@ envFileName in ThisBuild := ".env"
 
 lazy val root = (project in file("."))
   .settings(name := "streaming-ucu-final-project")
-  .aggregate(solar_panel_emulator, weather_provider, 
-    // streaming_app
+  .aggregate(solar_panel_emulator,
+    weather_provider,
+    streaming_app
   )
 
 lazy val solar_panel_emulator = (project in file("solar-panel-emulator"))
@@ -117,26 +118,29 @@ lazy val weather_provider = (project in file("weather-provider"))
     dockerSettings()
   )
 
-// lazy val streaming_app = (project in file("streaming-app"))
-//   .enablePlugins(sbtdocker.DockerPlugin)
-//   .settings(
-//     name := "streaming-app",
-//     libraryDependencies ++= commonDependencies ++ streamsDependencies ++ Seq(
-//       // your additional dependencies go here
-//     ),
-//     assemblyMergeStrategy in assembly := {
-// 	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
-// 	  case PathList("META-INF", xs @ _*) =>
-// 	    (xs map {_.toLowerCase}) match {
-// 	      case ("manifest.mf" :: Nil) | ("index.list" :: Nil) | ("dependencies" :: Nil) => MergeStrategy.discard
-// 	      case _ => MergeStrategy.last
-// 	    }
-// 	  case x =>
-// 	    val oldStrategy = (assemblyMergeStrategy in assembly).value
-// 	    oldStrategy(x)
-// 	},
-//     dockerSettings(),
-//     mainClass in assembly := Some("ua.ucu.edu.DummyStreamingApp")
-//   )
+ lazy val streaming_app = (project in file("streaming-app"))
+   .enablePlugins(sbtdocker.DockerPlugin)
+   .settings(
+     name := "streaming-app",
+     libraryDependencies ++= commonDependencies ++ streamsDependencies ++ Seq(
+       // your additional dependencies go here
+//       libraryDependencies +=  "org.slf4j" % "slf4j-log4j12" % "1.7.25",
+//       libraryDependencies +=  "org.apache.kafka" %% "kafka-streams-scala" % "2.0.1"
+
+     ),
+     assemblyMergeStrategy in assembly := {
+ 	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
+ 	  case PathList("META-INF", xs @ _*) =>
+ 	    (xs map {_.toLowerCase}) match {
+ 	      case ("manifest.mf" :: Nil) | ("index.list" :: Nil) | ("dependencies" :: Nil) => MergeStrategy.discard
+ 	      case _ => MergeStrategy.last
+ 	    }
+ 	  case x =>
+ 	    val oldStrategy = (assemblyMergeStrategy in assembly).value
+ 	    oldStrategy(x)
+ 	},
+     dockerSettings(),
+     mainClass in assembly := Some("ua.ucu.edu.DummyStreamingApp")
+   )
 
 

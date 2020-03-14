@@ -1,8 +1,4 @@
-package ua.ucu.edu
-
-//import java.ues
 import java.util.concurrent.TimeUnit
-import java.util.Properties
 
 import org.apache.kafka.streams.scala.ImplicitConversions._
 import org.apache.kafka.streams.scala._
@@ -10,21 +6,17 @@ import org.apache.kafka.streams.{KafkaStreams, StreamsConfig}
 import org.slf4j.LoggerFactory
 import Serdes._
 
-
-
-// dummy app for testing purposes
-object Main extends App {
+object Stream extends App {
 
   val logger = LoggerFactory.getLogger(getClass)
 
 
-//  val BrokerList: String = System.getenv("KAFKA_BROKERS")
+  //  val BrokerList: String = System.getenv("KAFKA_BROKERS")
   val BrokerList: String = "localhost:9092"
   val Topic = "merged_data"
   val props = new Properties()
   props.put("bootstrap.servers", BrokerList)
   props.put("client.id", "cpv provider")
-  props.put("application.id", "smth")
   props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
   props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 
@@ -39,7 +31,7 @@ object Main extends App {
     logger.info(s"record processed $k->$v")
   }
 
-//  testStream.to(Topic)
+  testStream.to(Topic)
 
   val streams = new KafkaStreams(builder.build(), props)
   streams.cleanUp()
@@ -50,6 +42,5 @@ object Main extends App {
   }
 
   object Config {
-    val KafkaBrokers = "KAFKA_BROKERS"
-  }
+    val KafkaBrokers = "KAFKA_BROKERS
 }

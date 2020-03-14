@@ -5,7 +5,7 @@ package ua.ucu.edu
 import org.apache.kafka.clients.producer._
 import java.util.Properties
 
-import Main.{Topic, getClass, producer}
+//import Main.{Topic, getClass, producer}
 import org.apache.kafka.clients.producer.{Callback, KafkaProducer, ProducerRecord, RecordMetadata}
 import org.slf4j.LoggerFactory
 import ua.ucu.edu.kafka.Config
@@ -15,12 +15,13 @@ import ua.ucu.edu.kafka.DummyDataProducer.logger
 
 
 
-object Main extends App {
+object CPV extends App {
 
   val logger = LoggerFactory.getLogger(getClass)
 
 
-  val BrokerList: String = System.getenv("KAFKA_BROKERS")
+//  val BrokerList: String = System.getenv("KAFKA_BROKERS")
+  val BrokerList: String = "localhost:9092"
   val Topic = "cpv"
   val props = new Properties()
   props.put("bootstrap.servers", BrokerList)
@@ -37,7 +38,8 @@ object Main extends App {
 //
 //
   while (true) {
-    Thread.sleep(5000)
+//  to search for data every 5 seconds
+    Thread.sleep(1000)
       val handler = new DataHandler()
       val a = handler.parseJSON().toString()
     logger.info(s"[$Topic] $a")

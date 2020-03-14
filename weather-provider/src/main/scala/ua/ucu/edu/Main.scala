@@ -14,14 +14,15 @@ import ua.ucu.edu.kafka.DummyDataProducer.logger
 
 import scala.io.BufferedSource
 
-object Main extends App {
+object Procurements extends App {
 
   val logger = LoggerFactory.getLogger(getClass)
 
   logger.info("======== Prozorro Sales ========")
 
-  val BrokerList: String = System.getenv("KAFKA_BROKERS")
-  val Topic = "test_topic_out"
+//  val BrokerList: String = System.getenv("KAFKA_BROKERS")
+  val BrokerList: String = "localhost:9092"
+  val Topic = "procuraments"
   val props = new Properties()
   props.put("bootstrap.servers", BrokerList)
   props.put("client.id", "procurement provider")
@@ -36,7 +37,7 @@ object Main extends App {
 
 
   while (true) {
-    Thread.sleep(1000)
+    Thread.sleep(10000)
     val sm = new getData()
     val a = sm.getDataPrepared().toString()
 //    println(a.toString())
