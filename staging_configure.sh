@@ -25,5 +25,8 @@ aws configure set default.region us-east-1 || exit /b
 ecs-cli configure profile default --profile-name ucu-class
 
 # login to ecr registry
-$(aws ecr get-login --region us-east-1 --no-include-email)
+aws ecr get-login-password \
+        --region us-east-1 | docker login \
+        --username AWS \
+        --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
 
