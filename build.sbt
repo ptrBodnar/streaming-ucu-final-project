@@ -128,6 +128,7 @@ lazy val weather_provider = (project in file("weather-provider"))
 //       libraryDependencies +=  "org.apache.kafka" %% "kafka-streams-scala" % "2.0.1"
 
      ),
+     libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1",
      assemblyMergeStrategy in assembly := {
  	  case x if x.endsWith("module-info.class")  => MergeStrategy.discard
  	  case PathList("META-INF", xs @ _*) =>

@@ -20,8 +20,8 @@ object Procurements extends App {
 
   logger.info("======== Prozorro Sales ========")
 
-//  val BrokerList: String = System.getenv("KAFKA_BROKERS")
-  val BrokerList: String = "localhost:9092"
+  val BrokerList: String = System.getenv("KAFKA_BROKERS")
+//  val BrokerList: String = "localhost:9092"
   val Topic = "procuraments"
   val props = new Properties()
   props.put("bootstrap.servers", BrokerList)
@@ -33,19 +33,31 @@ object Procurements extends App {
 
   val producer = new KafkaProducer[String, String](props)
 
-  val testMsg = "hot weather"
-
+// тимчасово
+  val sm = new getData()
+  val a = sm.getDataPrepared()
 
   while (true) {
-    Thread.sleep(10000)
-    val sm = new getData()
-    val a = sm.getDataPrepared().toString()
-//    println(a.toString())
+//    println("started waiting")
+    Thread.sleep(8000)
+//    поки перенесу вище, щоб зайвий раз не мучити апі
+//    val sm = new getData()
+//    val a = sm.getDataPrepared().toString()
+//    println("will be logging")
     logger.info(s"[$Topic] $a")
-    val data = new ProducerRecord[String, String](Topic, a)
-    producer.send(data, (metadata: RecordMetadata, exception: Exception) => {
-      logger.info(metadata.toString, exception)
+
+    a.foreach((d) => {
+      val data = new ProducerRecord[String, String](Topic, d.cpv, d.auctionID)
+//      println(d.cpv)
+//      println(d.auctionID)
+      producer.send(data, (metadata: RecordMetadata, exception: Exception) => {
+        logger.info(metadata.toString, exception)
+      })
     })
+//    val data = new ProducerRecord[String, String](Topic, a)
+//    producer.send(data, (metadata: RecordMetadata, exception: Exception) => {
+//      logger.info(metadata.toString, exception)
+//    })
   }
 
 //  producer.close()

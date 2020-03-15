@@ -9,17 +9,20 @@ import org.apache.kafka.streams.scala._
 import org.apache.kafka.streams.{KafkaStreams, StreamsConfig}
 import org.slf4j.LoggerFactory
 import Serdes._
+import org.apache.kafka.streams.kstream.{JoinWindows, Joined, TimeWindows}
+import play.api.libs.json._
+import org.apache.kafka.streams.scala.ImplicitConversions._
+
 
 
 
 // dummy app for testing purposes
-object Main extends App {
+object DummyStreamingApp extends App {
 
   val logger = LoggerFactory.getLogger(getClass)
 
-
-//  val BrokerList: String = System.getenv("KAFKA_BROKERS")
-  val BrokerList: String = "localhost:9092"
+  val BrokerList: String = System.getenv("KAFKA_BROKERS")
+//  val BrokerList: String = "localhost:9092"
   val Topic = "merged_data"
   val props = new Properties()
   props.put("bootstrap.servers", BrokerList)
@@ -33,13 +36,23 @@ object Main extends App {
 
   val cpv = builder.stream[String, String]("cpv")
   val procuraments = builder.stream[String, String]("procuraments")
+  val cpvRisk = builder.stream[String, String]("cpvRisk")
 
 
-  cpv.foreach { (k, v) =>
-    logger.info(s"record processed $k->$v")
-  }
+  val firstDataset = procuraments.leftJoin(cpv)((lV: String, rV: String)=> s"$rV, $lV",
+      windows = JoinWindows.of(50000))
+//  (
+      Joined.keySerde(Serdes.String)
+      .withValueSerde(Serdes.String)
+//  )
+  val secondDataset = firstDataset.leftJoin(cpvRisk)((lV: String, rV: String)=> s"$rV, $lV",
+  windows = JoinWindows.of(20000))
 
-//  testStream.to(Topic)
+  secondDataset.foreach { (k, v) =>
+          logger.info(s"key $k, values are = $v")
+          println(s"key $k, values are = $v")
+    }
+  secondDataset.to(Topic)
 
   val streams = new KafkaStreams(builder.build(), props)
   streams.cleanUp()

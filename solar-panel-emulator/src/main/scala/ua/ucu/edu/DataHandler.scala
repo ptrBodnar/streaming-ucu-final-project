@@ -8,23 +8,38 @@ import play.api.libs.json.Json
 
 class DataHandler {
 
-  case class CodesCPV(code: String, description: String, risk: Int)
+  case class CodesCPV(code: String, description: String)
+  case class CPVRisk(code: String, risk: Int)
+
 
   object CodesCPV {
     implicit val reads: Reads[CodesCPV] = (
-      (JsPath \ "Код CPV").read[String] ~
-        (JsPath \ "Опис").read[String] ~
-        (JsPath \ "risk").read[Int]
+      (JsPath \ "cpv").read[String] ~
+        (JsPath \ "description").read[String]
+//        (JsPath \ "risk").read[Int]
       ) (CodesCPV.apply _)
   }
 
-  def parseJSON(): List[CodesCPV] = {
-    val json: BufferedSource = scala.io.Source.fromResource("cpvRisk.json")
+  object CPVRisk {
+    implicit val reads: Reads[CPVRisk] = (
+      (JsPath \ "cpv").read[String] ~
+        (JsPath \ "risk").read[Int]
+
+      ) (CPVRisk.apply _)
+  }
+
+  def parseJSON(): Tuple2[List[CodesCPV], List[CPVRisk]] = {
+    val json: BufferedSource = scala.io.Source.fromResource("cpvDescriptionOfProcurements.json")
     val json_str: String = try json.mkString finally json.close()
 
-    val CPVarray = Json.parse(json_str).as[List[CodesCPV]]
+    val risk: BufferedSource = scala.io.Source.fromResource("cpvRisks.json")
+    val risk_str: String = try risk.mkString finally risk.close()
 
-    CPVarray
+    val CPVarray = Json.parse(json_str).as[List[CodesCPV]]
+    val RiskArray = Json.parse(risk_str).as[List[CPVRisk]]
+
+
+    (CPVarray, RiskArray)
   }
 
 }

@@ -6,3 +6,8 @@ _readme.md
 /.sbt-hydra-history
 /project/.bloop/streaming-ucu-final-build.json
 /.metals
+aws/
+awscliv2.zip
+
+
+
