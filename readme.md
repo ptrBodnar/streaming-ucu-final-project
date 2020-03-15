@@ -1,3 +1,26 @@
+
+# Results
+
+Students: Petro Bodnar, Olena Shevchenko
+
+We've created a streaming application that merges data from the public procurement system of Ukraine "Prozorro Sales," with the CPV (international procurement description) and artificially created procurement risk assessment, based on the type of goods. This component of data is artificial. However, it is based on real risk measurements implemented, for example, in [clarity project](https://clarity-project.info/). 
+
+Datasets we've used:
+Prozorro Sales API is providing information about procurement, including CPV code, name, value, and a unique id.
+CPV dictionary (json file) with the description of each CPV code.
+Risk assessment for different types of goods based on CPV (json file). 
+
+We decided to use old names of the modules to avoid problems with staging and delivering this application to the AWS server because there is a big codebase dependant on the names of modules. 
+
+`solar-panel-emulator` is reading json's with CPV descriptions and risk assessments, and writing those to the topics: `cpv` and `cpvRisks`.
+
+`weather-provider` is reading data from Prozorro Sales API, getting relevant field, and sending to the topic: `procurements`.
+
+`streaming-app`: is joining first procurements with `cpv` topic, by the CPV code as a key. Then it merges the result of the previous operation with `cpvRisks` topic and writed the output into `merged_data` topic.
+
+
+
+
 # Streaming course final project assignment
 
 Base project for a final assignment, contains:

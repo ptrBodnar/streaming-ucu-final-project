@@ -33,14 +33,19 @@ object Procurements extends App {
 
   val producer = new KafkaProducer[String, String](props)
 
-// тимчасово
+// temporary 
   val sm = new getData()
   val a = sm.getDataPrepared()
 
   while (true) {
 //    println("started waiting")
     Thread.sleep(8000)
-//    поки перенесу вище, щоб зайвий раз не мучити апі
+//    we need to uncomment this part in order to send requests to api
+//    for each run of the application, however we decided to do this only 
+//    once in order not to bother API to much and not get banned for sending 
+//    too many requests. We can uncomment it any time to start sending requests
+//    per each run of the script.
+
 //    val sm = new getData()
 //    val a = sm.getDataPrepared().toString()
 //    println("will be logging")
