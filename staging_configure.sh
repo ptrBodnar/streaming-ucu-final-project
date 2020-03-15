@@ -13,6 +13,7 @@ export $(grep -v '^#' .env | xargs)
 
 AWS_ACCESS_KEY_ID=$1
 AWS_SECRET_ACCESS_KEY=$2
+AWS_ACCOUNT_ID=$3
 
 ecs-cli --version
 
@@ -25,5 +26,8 @@ aws configure set default.region us-east-1 || exit /b
 ecs-cli configure profile default --profile-name ucu-class
 
 # login to ecr registry
-$(aws ecr get-login --region us-east-1 --no-include-email)
+aws ecr get-login-password \
+        --region us-east-1 | docker login \
+        --username AWS \
+        --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
 
